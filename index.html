@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revolution 9 - Terminal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <div>
+            <h1>Revolution 9</h1>
+            <p id="status-bar">Esperando conexión...</p>
+        </div>
+        <button id="btn-logout" class="hidden" onclick="cerrarSesion()" style="background-color: #dc3545; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px;">
+             Cerrar Sesión
+        </button>
+    </header>
+
+    <main class="container">
+        <section id="login-section" class="card">
+            <h2>Acceso al Sistema</h2>
+            <input type="text" id="username" placeholder="Usuario (ej. empleado1)">
+            <input type="password" id="password" placeholder="Contraseña (12345)">
+            <button onclick="guardarCredenciales(event)">Ingresar</button>
+        </section>
+
+        <section id="dashboard-section" class="card hidden" style="max-width: 900px; margin: auto;">
+            <h2 style="text-align: center; color: #343a40;"> Centro de Mando Logístico</h2>
+            
+            <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+                <div style="flex: 1; min-width: 300px; border-right: 1px solid #eee; padding-right: 15px;">
+                    <h3 style="font-size: 1.1em;">Resumen de Operaciones</h3>
+                    <button onclick="obtenerDashboard()" style="padding: 5px; margin-bottom: 10px;"> Actualizar Gráfico</button>
+                    <canvas id="graficoPedidos"></canvas>
+                </div>
+                
+                <div style="flex: 2; min-width: 400px;">
+                    <h3 style="font-size: 1.1em;"> Monitoreo de Pedidos</h3>
+                    <button onclick="cargarTablaJefe()" style="padding: 5px; margin-bottom: 10px;"> Actualizar Lista</button>
+                    
+                    <table border="1" width="100%" style="text-align: center; border-collapse: collapse; background-color: white;">
+                        <thead style="background-color: #343a40; color: white;">
+                            <tr>
+                                <th style="padding: 8px;">ID Pedido</th>
+                                <th style="padding: 8px;">Estado</th>
+                                <th style="padding: 8px;">Operario Asignado</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabla-jefe-body">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section id="picking-section" class="card hidden" style="margin-top: 20px; padding: 15px; border: 1px solid #ccc;">
+            <h2> Panel de Recolección (Picking)</h2>
+            
+            <button onclick="obtenerMiTarea()" style="padding: 10px; background-color: #007bff; color: white; border: none; cursor: pointer; border-radius: 5px;">
+                 Asignarme Tarea Automática
+            </button>
+            
+            <div id="picking-result" style="margin-top: 10px; font-weight: bold;"></div>
+
+            <div id="zona-trabajo" class="hidden" style="margin-top: 20px;">
+                <h3 style="color: #28a745;">Pedido Asignado: #<span id="pedido-asignado-id"></span></h3>
+                
+                <table border="1" width="100%" style="text-align: left; border-collapse: collapse; background-color: white;">
+                    <thead style="background-color: #f8f9fa;">
+                        <tr>
+                            <th style="padding: 8px;">Pasillo (X)</th>
+                            <th style="padding: 8px;">Estante (Y)</th>
+                            <th style="padding: 8px;">Producto</th>
+                            <th style="padding: 8px;">Cant.</th>
+                            <th style="padding: 8px;">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabla-ruta-body">
+                        </tbody>
+                </table>
+                
+                <br>
+                <button onclick="completarPedidoAsignado()" style="padding: 10px; background-color: #28a745; color: white; border: none; cursor: pointer; border-radius: 5px;">
+                    ✅ Completar Pedido
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
